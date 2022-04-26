@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="9441e9c2-c213-4e1b-86d8-21284ffb06c5" created="Tue Apr 26 09:12:40 CEST 2022" createdBy="eddiehartman" main="IdentityService" modified="Tue Apr 26 09:12:40 CEST 2022" modifiedBy="eddiehartman" project="IdentityHub" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="cc4ea47f-e319-4a24-9201-e863a37b6297" created="Tue Apr 26 10:02:41 CEST 2022" createdBy="eddiehartman" main="IdentityService" modified="Tue Apr 26 10:02:41 CEST 2022" modifiedBy="eddiehartman" project="IdentityHub" version="7.1.1">
     <AssemblyLine name="IdentityService">
-        <ModTime>1650898495504</ModTime>
+        <ModTime>1650960063314</ModTime>
         <Settings>
             <parameter name="ALPoolSettingsDialog">false</parameter>
             <parameter name="automapattributes">false</parameter>
             <parameter name="createTombstones">false</parameter>
             <parameter name="includeGlobalPrologs">true</parameter>
-            <parameter name="includePrologs">ScriptLib</parameter>
+            <parameter name="includePrologs"><![CDATA[ScriptLib
+Request]]></parameter>
             <parameter name="nullBehaviorDialog">showNullBehavior</parameter>
         </Settings>
         <Hooks/>
@@ -23,9 +24,9 @@
         <ContainerEF name="EntryFeedContainer">
             <Connector name="HTTP Listener">
                 <InheritFrom>system:/Connectors/ibmdi.HTTPServer</InheritFrom>
-                <ModTime>1650898126592</ModTime>
+                <ModTime>1650959702417</ModTime>
                 <ConnectorMode>Server</ConnectorMode>
-                <ConnectorState>Enabled</ConnectorState>
+                <ConnectorState>Disabled</ConnectorState>
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
                 </Configuration>
@@ -76,11 +77,11 @@
         </ContainerEF>
         <ContainerDF name="DataFlowContainer">
             <Script name="Process Request">
-                <ModTime>1650898351532</ModTime>
+                <ModTime>1650959909380</ModTime>
                 <parameter name="script"><![CDATA[try {
 	request = new Request(work);
 } catch (ex) {
-	setResult("400", "Bad Request", "{error: \"" 
+	setResponse("400", "Bad Request", "{error: \"" 
 				+ String(ex).replaceAll('"', "'") + "\"");
 	system.exitFlow();
 }]]></parameter>

@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="26cea13f-eb7b-4ce8-8236-125bde350a20" created="Tue Apr 26 09:12:40 CEST 2022" createdBy="eddiehartman" main="ScriptLib" modified="Tue Apr 26 09:12:40 CEST 2022" modifiedBy="eddiehartman" project="IdentityHub" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="cc983a7c-5b7f-44c1-aeb2-bcb16adb4947" created="Tue Apr 26 10:02:41 CEST 2022" createdBy="eddiehartman" main="ScriptLib" modified="Tue Apr 26 10:02:41 CEST 2022" modifiedBy="eddiehartman" project="IdentityHub" version="7.1.1">
     <Script name="ScriptLib">
-        <ModTime>1650898533471</ModTime>
+        <ModTime>1650960127859</ModTime>
         <parameter name="includeFiles"/>
         <parameter name="script"><![CDATA[// ALWAYS INCLUDE SCRIPTLIB FIRST FOR YOUR AL
 //
-_VRS = "1.0"; // First version
+_VRS = "20220425 1535"; // First version
 
 var _ERRORS = [];
 var _WARNINGS = [];
@@ -22,7 +22,7 @@ function log(lvl, msg, throwIt) {
 	
 	lvl = lvl.toUpperCase();
 	
-	if ("ERROR".equalsIgnoreCase(lvl)) {
+	if ("ERROR".equalsIgnoreCase(lvl) || "FATAL".equalsIgnoreCase(lvl)) {
 		_ERRORS.push(msg)
 	} else
 	if ("WARNING".equalsIgnoreCase(lvl)) {
@@ -36,6 +36,7 @@ function log(lvl, msg, throwIt) {
 
 log("ScriptLib v" + _VRS);
 
+// Throw exception if errors have been reported
 function throwOnError(msg) {
 	if (typeof msg == "undefined") {
 		msg = ""	
@@ -43,6 +44,15 @@ function throwOnError(msg) {
 		msg = msg + "\n"
 	}
 	if (_ERRORS.length > 0) throw msg + _ERRORS.join("\n");
+}
+
+// Set return code and message (and possible body) for the response to the HTTP client
+function setResponse(code, msg, body) {
+	work["http.ResponseCode"] = code;
+	work["http.ResponseMsg"] = msg;
+	if (typeof body != "undefined" && body) {
+		work["http.body"] = body;
+	}
 }]]></parameter>
     </Script>
 </MetamergeConfig>

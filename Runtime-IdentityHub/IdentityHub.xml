@@ -1,13 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig IDIversion="Created by SDI7.2 - 2019-07-08" created="Mon Apr 25 16:17:18 CEST 2022" createdBy="eddiehartman" modified="Tue Apr 26 09:12:41 CEST 2022" modifiedBy="eddiehartman" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig IDIversion="Created by SDI7.2 - 2019-07-08" created="Mon Apr 25 16:17:18 CEST 2022" createdBy="eddiehartman" modified="Tue Apr 26 10:02:42 CEST 2022" modifiedBy="eddiehartman" version="7.1.1">
     <Folder name="AssemblyLines">
         <AssemblyLine name="IdentityService">
-            <ModTime>1650898495504</ModTime>
+            <ModTime>1650960063314</ModTime>
             <Settings>
                 <parameter name="ALPoolSettingsDialog">false</parameter>
                 <parameter name="automapattributes">false</parameter>
                 <parameter name="createTombstones">false</parameter>
                 <parameter name="includeGlobalPrologs">true</parameter>
-                <parameter name="includePrologs">ScriptLib</parameter>
+                <parameter name="includePrologs"><![CDATA[ScriptLib
+Request]]></parameter>
                 <parameter name="nullBehaviorDialog">showNullBehavior</parameter>
             </Settings>
             <Hooks/>
@@ -22,12 +23,12 @@
             </SimulationConfig>
             <LogConfig/>
             <ContainerEF name="EntryFeedContainer">
-                <ModTime>1650898126592</ModTime>
+                <ModTime>1650959702417</ModTime>
                 <Connector name="HTTP Listener">
                     <InheritFrom>system:/Connectors/ibmdi.HTTPServer</InheritFrom>
-                    <ModTime>1650898126592</ModTime>
+                    <ModTime>1650959702417</ModTime>
                     <ConnectorMode>Server</ConnectorMode>
-                    <ConnectorState>Enabled</ConnectorState>
+                    <ConnectorState>Disabled</ConnectorState>
                     <Configuration>
                         <InheritFrom>[parent]</InheritFrom>
                         <ModTime>1650898090051</ModTime>
@@ -85,13 +86,13 @@
                 </Connector>
             </ContainerEF>
             <ContainerDF name="DataFlowContainer">
-                <ModTime>1650898351532</ModTime>
+                <ModTime>1650959909380</ModTime>
                 <Script name="Process Request">
-                    <ModTime>1650898351532</ModTime>
+                    <ModTime>1650959909380</ModTime>
                     <parameter name="script"><![CDATA[try {
 	request = new Request(work);
 } catch (ex) {
-	setResult("400", "Bad Request", "{error: \"" 
+	setResponse("400", "Bad Request", "{error: \"" 
 				+ String(ex).replaceAll('"', "'") + "\"");
 	system.exitFlow();
 }]]></parameter>
@@ -112,11 +113,11 @@
     <Folder name="Parsers"/>
     <Folder name="Scripts">
         <Script name="ScriptLib">
-            <ModTime>1650898533471</ModTime>
+            <ModTime>1650960127859</ModTime>
             <parameter name="includeFiles"/>
             <parameter name="script"><![CDATA[// ALWAYS INCLUDE SCRIPTLIB FIRST FOR YOUR AL
 //
-_VRS = "1.0"; // First version
+_VRS = "20220425 1535"; // First version
 
 var _ERRORS = [];
 var _WARNINGS = [];
@@ -134,7 +135,7 @@ function log(lvl, msg, throwIt) {
 	
 	lvl = lvl.toUpperCase();
 	
-	if ("ERROR".equalsIgnoreCase(lvl)) {
+	if ("ERROR".equalsIgnoreCase(lvl) || "FATAL".equalsIgnoreCase(lvl)) {
 		_ERRORS.push(msg)
 	} else
 	if ("WARNING".equalsIgnoreCase(lvl)) {
@@ -148,6 +149,7 @@ function log(lvl, msg, throwIt) {
 
 log("ScriptLib v" + _VRS);
 
+// Throw exception if errors have been reported
 function throwOnError(msg) {
 	if (typeof msg == "undefined") {
 		msg = ""	
@@ -155,6 +157,53 @@ function throwOnError(msg) {
 		msg = msg + "\n"
 	}
 	if (_ERRORS.length > 0) throw msg + _ERRORS.join("\n");
+}
+
+// Set return code and message (and possible body) for the response to the HTTP client
+function setResponse(code, msg, body) {
+	work["http.ResponseCode"] = code;
+	work["http.ResponseMsg"] = msg;
+	if (typeof body != "undefined" && body) {
+		work["http.body"] = body;
+	}
+}]]></parameter>
+        </Script>
+        <Script name="Request">
+            <ModTime>1650960092541</ModTime>
+            <parameter name="includeFiles"/>
+            <parameter name="script"><![CDATA[_VRS = "20220426 0953"; // Initial version
+
+var Request = function(workEntry, args) {
+	this.vrs = _VRS;
+	this.args = args || {};
+	
+	// Local log function to aid in troubleshooting
+	this.log = function(lvl, msg, throwIt) {
+		if (typeof throwIt == "undefined") throwIt = false;
+		if (typeof lvl == "undefined") {
+			lvl = "INFO";
+			msg = ""
+		} else
+		if (typeof msg == "undefined") {
+			msg = lvl;
+			lvl = "INFO"
+		}
+		
+		log(lvl, "[Request] " + msg, throwIt)
+	}
+	
+	// Initialization and validation of Request
+	this.initialize = function() {
+		this.log("v" + this.vrs);
+		
+		// Validate the request
+	}
+	
+	// Initialize the Request by handling the passed entry (and possible arguments)
+	this.initialize();
+	
+	// Always return ref to this object
+	return this;
 }]]></parameter>
         </Script>
     </Folder>

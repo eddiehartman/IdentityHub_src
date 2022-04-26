@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="c41f3d00-3f25-4cf2-81a3-1a3154ed53c9" created="Tue Apr 26 09:59:32 CEST 2022" createdBy="eddiehartman" main="Request" modified="Tue Apr 26 09:59:32 CEST 2022" modifiedBy="eddiehartman" project="IdentityHub" version="7.1.1">
+    <Script name="Request">
+        <ModTime>1650959672928</ModTime>
+        <parameter name="includeFiles"/>
+        <parameter name="script"><![CDATA[_VRS = "20220426 0953"; // Initial version
+
+var Request = function(workEntry, args) {
+	this.vrs = _VRS;
+	this.args = args || {};
+	
+	// Local log function to aid in troubleshooting
+	this.log = function(lvl, msg, throwIt) {
+		if (typeof throwIt == "undefined") throwIt = false;
+		if (typeof lvl == "undefined") {
+			lvl = "INFO";
+			msg = ""
+		} else
+		if (typeof msg == "undefined") {
+			msg = lvl;
+			lvl = "INFO"
+		}
+		
+		log(lvl, "[Request] " msg, throwIt)
+	}
+	
+	// Initialization and validation of Request
+	this.initialize = function() {
+		this.log("v" + this.vrs);
+		
+		// Validate the request
+	}
+	
+	// Initialize the Request by handling the passed entry (and possible arguments)
+	this.initialize();
+	
+	// Always return ref to this object
+	return this;
+}]]></parameter>
+    </Script>
+</MetamergeConfig>
