@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="26cea13f-eb7b-4ce8-8236-125bde350a20" created="Tue Apr 26 09:12:40 CEST 2022" createdBy="eddiehartman" main="ScriptLib" modified="Tue Apr 26 09:12:40 CEST 2022" modifiedBy="eddiehartman" project="IdentityHub" version="7.1.1">
+    <Script name="ScriptLib">
+        <ModTime>1650898533471</ModTime>
+        <parameter name="includeFiles"/>
+        <parameter name="script"><![CDATA[// ALWAYS INCLUDE SCRIPTLIB FIRST FOR YOUR AL
+//
+_VRS = "1.0"; // First version
+
+var _ERRORS = [];
+var _WARNINGS = [];
+	
+function log(lvl, msg, throwIt) {
+	if (typeof throwIt == "undefined") throwIt = false;
+	if (typeof lvl == "undefined") {
+		lvl = "INFO";
+		msg = ""
+	} else
+	if (typeof msg == "undefined") {
+		msg = lvl;
+		lvl = "INFO"
+	}
+	
+	lvl = lvl.toUpperCase();
+	
+	if ("ERROR".equalsIgnoreCase(lvl)) {
+		_ERRORS.push(msg)
+	} else
+	if ("WARNING".equalsIgnoreCase(lvl)) {
+		_WARNINGS.push(msg)
+	}
+	
+	task.logmsg(lvl, msg);
+	
+	if (throwIt) throw msg;
+}
+
+log("ScriptLib v" + _VRS);
+
+function throwOnError(msg) {
+	if (typeof msg == "undefined") {
+		msg = ""	
+	} else {
+		msg = msg + "\n"
+	}
+	if (_ERRORS.length > 0) throw msg + _ERRORS.join("\n");
+}]]></parameter>
+    </Script>
+</MetamergeConfig>

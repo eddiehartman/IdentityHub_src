@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="3" UUID="b5ef9da9-6139-404a-b98f-874f8e0cf076" created="Mon Apr 25 16:48:03 CEST 2022" createdBy="eddiehartman" main="IdentityService" modified="Mon Apr 25 16:55:40 CEST 2022" modifiedBy="eddiehartman" project="IdentityHub" version="7.1.1">
+    <AssemblyLine name="IdentityService">
+        <ModTime>1650898495504</ModTime>
+        <Settings>
+            <parameter name="ALPoolSettingsDialog">false</parameter>
+            <parameter name="automapattributes">false</parameter>
+            <parameter name="createTombstones">false</parameter>
+            <parameter name="includeGlobalPrologs">true</parameter>
+            <parameter name="includePrologs">ScriptLib</parameter>
+            <parameter name="nullBehaviorDialog">showNullBehavior</parameter>
+        </Settings>
+        <Hooks/>
+        <CheckpointConfig/>
+        <SandboxConfig/>
+        <SimulationConfig>
+            <SimulationStates>
+                <Component name="Process Request" state="Enabled"/>
+                <Component name="HTTP Listener" state="Enabled"/>
+            </SimulationStates>
+            <ProxySettings/>
+        </SimulationConfig>
+        <LogConfig/>
+        <ContainerEF name="EntryFeedContainer">
+            <ModTime>1650898126592</ModTime>
+            <Connector name="HTTP Listener">
+                <InheritFrom>system:/Connectors/ibmdi.HTTPServer</InheritFrom>
+                <ModTime>1650898126592</ModTime>
+                <ConnectorMode>Server</ConnectorMode>
+                <ConnectorState>Enabled</ConnectorState>
+                <Configuration>
+                    <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1650898090051</ModTime>
+                </Configuration>
+                <Parser>
+                    <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1650898090051</ModTime>
+                </Parser>
+                <AttributeMap name="Input">
+                    <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1650898122267</ModTime>
+                    <AttributeMapItem>
+                        <Name>*</Name>
+                        <Type>simple</Type>
+                        <Simple>*</Simple>
+                    </AttributeMapItem>
+                </AttributeMap>
+                <AttributeMap name="Output">
+                    <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1650898126592</ModTime>
+                    <AttributeMapItem>
+                        <Name>*</Name>
+                        <Type>simple</Type>
+                        <Simple>*</Simple>
+                    </AttributeMapItem>
+                </AttributeMap>
+                <DeltaSettings/>
+                <Schema name="Input">
+                    <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1650898090051</ModTime>
+                </Schema>
+                <Schema name="Output">
+                    <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1650898090051</ModTime>
+                </Schema>
+                <LinkCriteria>
+                    <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1650898090051</ModTime>
+                </LinkCriteria>
+                <Hooks>
+                    <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1650898090051</ModTime>
+                </Hooks>
+                <CheckpointConfig/>
+                <SandboxConfig/>
+                <Reconnect>
+                    <InheritFrom>[parent]</InheritFrom>
+                    <ReconnectRules/>
+                </Reconnect>
+                <Operations/>
+                <PoolDefinition>
+                    <InheritFrom>[parent]</InheritFrom>
+                </PoolDefinition>
+                <PoolInstance/>
+            </Connector>
+        </ContainerEF>
+        <ContainerDF name="DataFlowContainer">
+            <ModTime>1650898351532</ModTime>
+            <Script name="Process Request">
+                <ModTime>1650898351532</ModTime>
+                <parameter name="script"><![CDATA[try {
+	request = new Request(work);
+} catch (ex) {
+	setResult("400", "Bad Request", "{error: \"" 
+				+ String(ex).replaceAll('"', "'") + "\"");
+	system.exitFlow();
+}]]></parameter>
+            </Script>
+        </ContainerDF>
+        <ThreadOptions>
+            <parameter name="assemblyline.ehc.executeProlog">false</parameter>
+            <parameter name="assemblyline.ehc.maxInstance">5</parameter>
+            <parameter name="assemblyline.ehc.minPrepare">5</parameter>
+        </ThreadOptions>
+        <Operations/>
+        <InitParams>
+            <Schema name="AssemblyLineInitParams"/>
+        </InitParams>
+    </AssemblyLine>
+</MetamergeConfig>
