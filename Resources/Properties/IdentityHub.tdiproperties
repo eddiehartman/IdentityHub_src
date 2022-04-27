@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="757cda30-1e63-4a53-a931-149f5aed2333" created="Mon Apr 25 16:17:18 CEST 2022" createdBy="eddiehartman" modified="Mon Apr 25 16:17:18 CEST 2022" modifiedBy="eddiehartman" project="IdentityHub" version="7.1.1">
-    <Container>
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="2" UUID="757cda30-1e63-4a53-a931-149f5aed2333" created="Mon Apr 25 16:17:18 CEST 2022" createdBy="eddiehartman" main="IdentityHub" modified="Wed Apr 27 12:45:08 EDT 2022" modifiedBy="JamesChy" project="IdentityHub" version="7.1.1">
+    <Container name="IdentityHub">
+        <ModTime>1651077903113</ModTime>
         <Container name="Data"/>
         <Properties name="Config">
+            <ModTime>1651077903113</ModTime>
             <Stores>
                 <PropertyStore name="IdentityHub">
+                    <ModTime>1651077903113</ModTime>
                     <Parser/>
                     <RawConnector>
                         <InheritFrom>system:/Connectors/ibmdi.Properties</InheritFrom>
-                        <parameter name="collection">@SUBSTITUTE{config.$directory}/IdentityHub.properties</parameter>
+                        <ModTime>1651077903113</ModTime>
+                        <parameter name="collection">IdentityHub/IdentityHub.properties</parameter>
                         <parameter name="collectionType">IdentityHub</parameter>
+                        <parameter name="keyAlias"/>
                     </RawConnector>
                     <Key>key</Key>
                     <Value>value</Value>

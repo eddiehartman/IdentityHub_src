@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig IDIversion="Created by SDI7.2 - 2022-02-21" created="Wed Apr 27 12:05:21 EDT 2022" createdBy="JamesChy" modified="Wed Apr 27 12:38:01 EDT 2022" modifiedBy="JamesChy" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig IDIversion="Created by SDI7.2 - 2022-02-21" created="Wed Apr 27 12:05:21 EDT 2022" createdBy="JamesChy" modified="Wed Apr 27 13:08:01 EDT 2022" modifiedBy="JamesChy" version="7.1.1">
     <Folder name="AssemblyLines">
         <AssemblyLine name="IdentityService">
             <ModTime>1650960063314</ModTime>
@@ -141,12 +141,12 @@ var Request = function(workEntry, args) {
 }]]></parameter>
         </Script>
         <Script name="ScriptLib">
-            <ModTime>1651077363506</ModTime>
+            <ModTime>1651077395606</ModTime>
             <parameter name="includeFiles"/>
             <parameter name="script"><![CDATA[// ALWAYS INCLUDE SCRIPTLIB FIRST FOR YOUR AL
 //
 // _VRS = "20220425 1535"; // First version
-_VRS = "20220427 1235-0500 JC"; // First version
+_VRS = "20220427 1235-0500 JC"; // JC Fixes bugs 
 
 var _ERRORS = [];
 var _WARNINGS = [];
@@ -253,12 +253,12 @@ function setResponse(code, msg, body) {
                 <InitialLoad>true</InitialLoad>
                 <CacheTimeout>0</CacheTimeout>
             </PropertyStore>
-            <PropertyStore name="IdentityHub">
+            <PropertyStore name="Java-Properties">
                 <Parser/>
                 <RawConnector>
                     <InheritFrom>system:/Connectors/ibmdi.Properties</InheritFrom>
                     <parameter name="collection">@SUBSTITUTE{config.$directory}/IdentityHub.properties</parameter>
-                    <parameter name="collectionType">IdentityHub</parameter>
+                    <parameter name="collectionType">Java-Properties</parameter>
                 </RawConnector>
                 <Key>key</Key>
                 <Value>value</Value>
@@ -266,12 +266,14 @@ function setResponse(code, msg, body) {
                 <InitialLoad>true</InitialLoad>
                 <CacheTimeout>0</CacheTimeout>
             </PropertyStore>
-            <PropertyStore name="Java-Properties">
+            <PropertyStore name="IdentityHub">
+                <ModTime>1651077903113</ModTime>
                 <Parser/>
                 <RawConnector>
                     <InheritFrom>system:/Connectors/ibmdi.Properties</InheritFrom>
-                    <parameter name="collection">@SUBSTITUTE{config.$directory}/IdentityHub.properties</parameter>
-                    <parameter name="collectionType">Java-Properties</parameter>
+                    <parameter name="collection">IdentityHub/IdentityHub.properties</parameter>
+                    <parameter name="collectionType">IdentityHub</parameter>
+                    <parameter name="keyAlias"/>
                 </RawConnector>
                 <Key>key</Key>
                 <Value>value</Value>

@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="c41f3d00-3f25-4cf2-81a3-1a3154ed53c9" created="Tue Apr 26 09:59:32 CEST 2022" createdBy="eddiehartman" main="Request" modified="Tue Apr 26 09:59:32 CEST 2022" modifiedBy="eddiehartman" project="IdentityHub" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="46f40de4-872b-455d-991b-11efc4555a54" created="Wed Apr 27 13:08:01 EDT 2022" createdBy="JamesChy" main="Request" modified="Wed Apr 27 13:08:01 EDT 2022" modifiedBy="JamesChy" project="IdentityHub" version="7.1.1">
     <Script name="Request">
-        <ModTime>1650959672928</ModTime>
+        <ModTime>1651076003258</ModTime>
         <parameter name="includeFiles"/>
         <parameter name="script"><![CDATA[_VRS = "20220426 0953"; // Initial version
 
@@ -20,7 +20,7 @@ var Request = function(workEntry, args) {
 			lvl = "INFO"
 		}
 		
-		log(lvl, "[Request] " msg, throwIt)
+		log(lvl, "[Request] " + msg, throwIt)
 	}
 	
 	// Initialization and validation of Request
