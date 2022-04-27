@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="01343d38-69aa-4fc3-9790-ea29015262ef" created="Wed Apr 27 13:06:59 EDT 2022" createdBy="JamesChy" main="IdentityService" modified="Wed Apr 27 13:06:59 EDT 2022" modifiedBy="JamesChy" project="IdentityHub" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="417a5851-ed33-4b41-a7bd-6f35d2f7f4fa" created="Wed Apr 27 13:16:59 EDT 2022" createdBy="JamesChy" main="IdentityService" modified="Wed Apr 27 13:16:59 EDT 2022" modifiedBy="JamesChy" project="IdentityHub" version="7.1.1">
     <AssemblyLine name="IdentityService">
         <ModTime>1650960063314</ModTime>
         <Settings>
