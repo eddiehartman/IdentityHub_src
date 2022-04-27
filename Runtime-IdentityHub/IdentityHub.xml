@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig IDIversion="Created by SDI7.2 - 2019-07-08" created="Mon Apr 25 16:17:18 CEST 2022" createdBy="eddiehartman" modified="Tue Apr 26 10:02:42 CEST 2022" modifiedBy="eddiehartman" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig IDIversion="Created by SDI7.2 - 2022-02-21" created="Wed Apr 27 12:05:21 EDT 2022" createdBy="JamesChy" modified="Wed Apr 27 12:38:01 EDT 2022" modifiedBy="JamesChy" version="7.1.1">
     <Folder name="AssemblyLines">
         <AssemblyLine name="IdentityService">
             <ModTime>1650960063314</ModTime>
@@ -23,7 +23,6 @@ Request]]></parameter>
             </SimulationConfig>
             <LogConfig/>
             <ContainerEF name="EntryFeedContainer">
-                <ModTime>1650959702417</ModTime>
                 <Connector name="HTTP Listener">
                     <InheritFrom>system:/Connectors/ibmdi.HTTPServer</InheritFrom>
                     <ModTime>1650959702417</ModTime>
@@ -31,15 +30,12 @@ Request]]></parameter>
                     <ConnectorState>Disabled</ConnectorState>
                     <Configuration>
                         <InheritFrom>[parent]</InheritFrom>
-                        <ModTime>1650898090051</ModTime>
                     </Configuration>
                     <Parser>
                         <InheritFrom>[parent]</InheritFrom>
-                        <ModTime>1650898090051</ModTime>
                     </Parser>
                     <AttributeMap name="Input">
                         <InheritFrom>[parent]</InheritFrom>
-                        <ModTime>1650898122267</ModTime>
                         <AttributeMapItem>
                             <Name>*</Name>
                             <Type>simple</Type>
@@ -48,7 +44,6 @@ Request]]></parameter>
                     </AttributeMap>
                     <AttributeMap name="Output">
                         <InheritFrom>[parent]</InheritFrom>
-                        <ModTime>1650898126592</ModTime>
                         <AttributeMapItem>
                             <Name>*</Name>
                             <Type>simple</Type>
@@ -58,19 +53,15 @@ Request]]></parameter>
                     <DeltaSettings/>
                     <Schema name="Input">
                         <InheritFrom>[parent]</InheritFrom>
-                        <ModTime>1650898090051</ModTime>
                     </Schema>
                     <Schema name="Output">
                         <InheritFrom>[parent]</InheritFrom>
-                        <ModTime>1650898090051</ModTime>
                     </Schema>
                     <LinkCriteria>
                         <InheritFrom>[parent]</InheritFrom>
-                        <ModTime>1650898090051</ModTime>
                     </LinkCriteria>
                     <Hooks>
                         <InheritFrom>[parent]</InheritFrom>
-                        <ModTime>1650898090051</ModTime>
                     </Hooks>
                     <CheckpointConfig/>
                     <SandboxConfig/>
@@ -86,7 +77,6 @@ Request]]></parameter>
                 </Connector>
             </ContainerEF>
             <ContainerDF name="DataFlowContainer">
-                <ModTime>1650959909380</ModTime>
                 <Script name="Process Request">
                     <ModTime>1650959909380</ModTime>
                     <parameter name="script"><![CDATA[try {
@@ -112,12 +102,51 @@ Request]]></parameter>
     <Folder name="Connectors"/>
     <Folder name="Parsers"/>
     <Folder name="Scripts">
+        <Script name="Request">
+            <ModTime>1651076003258</ModTime>
+            <parameter name="includeFiles"/>
+            <parameter name="script"><![CDATA[_VRS = "20220426 0953"; // Initial version
+
+var Request = function(workEntry, args) {
+	this.vrs = _VRS;
+	this.args = args || {};
+	
+	// Local log function to aid in troubleshooting
+	this.log = function(lvl, msg, throwIt) {
+		if (typeof throwIt == "undefined") throwIt = false;
+		if (typeof lvl == "undefined") {
+			lvl = "INFO";
+			msg = ""
+		} else
+		if (typeof msg == "undefined") {
+			msg = lvl;
+			lvl = "INFO"
+		}
+		
+		log(lvl, "[Request] " + msg, throwIt)
+	}
+	
+	// Initialization and validation of Request
+	this.initialize = function() {
+		this.log("v" + this.vrs);
+		
+		// Validate the request
+	}
+	
+	// Initialize the Request by handling the passed entry (and possible arguments)
+	this.initialize();
+	
+	// Always return ref to this object
+	return this;
+}]]></parameter>
+        </Script>
         <Script name="ScriptLib">
-            <ModTime>1650960127859</ModTime>
+            <ModTime>1651077363506</ModTime>
             <parameter name="includeFiles"/>
             <parameter name="script"><![CDATA[// ALWAYS INCLUDE SCRIPTLIB FIRST FOR YOUR AL
 //
-_VRS = "20220425 1535"; // First version
+// _VRS = "20220425 1535"; // First version
+_VRS = "20220427 1235-0500 JC"; // First version
 
 var _ERRORS = [];
 var _WARNINGS = [];
@@ -161,49 +190,11 @@ function throwOnError(msg) {
 
 // Set return code and message (and possible body) for the response to the HTTP client
 function setResponse(code, msg, body) {
-	work["http.ResponseCode"] = code;
-	work["http.ResponseMsg"] = msg;
+	work["http.ResponseCode"] = code || "200";
+	work["http.ResponseMsg"] = msg || "OK";
 	if (typeof body != "undefined" && body) {
 		work["http.body"] = body;
 	}
-}]]></parameter>
-        </Script>
-        <Script name="Request">
-            <ModTime>1650960092541</ModTime>
-            <parameter name="includeFiles"/>
-            <parameter name="script"><![CDATA[_VRS = "20220426 0953"; // Initial version
-
-var Request = function(workEntry, args) {
-	this.vrs = _VRS;
-	this.args = args || {};
-	
-	// Local log function to aid in troubleshooting
-	this.log = function(lvl, msg, throwIt) {
-		if (typeof throwIt == "undefined") throwIt = false;
-		if (typeof lvl == "undefined") {
-			lvl = "INFO";
-			msg = ""
-		} else
-		if (typeof msg == "undefined") {
-			msg = lvl;
-			lvl = "INFO"
-		}
-		
-		log(lvl, "[Request] " + msg, throwIt)
-	}
-	
-	// Initialization and validation of Request
-	this.initialize = function() {
-		this.log("v" + this.vrs);
-		
-		// Validate the request
-	}
-	
-	// Initialize the Request by handling the passed entry (and possible arguments)
-	this.initialize();
-	
-	// Always return ref to this object
-	return this;
 }]]></parameter>
         </Script>
     </Folder>
@@ -217,7 +208,7 @@ var Request = function(workEntry, args) {
         </InstanceProperties>
         <TombstonesConfig name="Tombstones"/>
         <SolutionInterface name="SolutionInterface">
-            <ModTime>1650897428922</ModTime>
+            <ModTime>1651075918865</ModTime>
             <InstanceID>IdentityHub</InstanceID>
             <enabled>true</enabled>
         </SolutionInterface>
@@ -262,12 +253,12 @@ var Request = function(workEntry, args) {
                 <InitialLoad>true</InitialLoad>
                 <CacheTimeout>0</CacheTimeout>
             </PropertyStore>
-            <PropertyStore name="Java-Properties">
+            <PropertyStore name="IdentityHub">
                 <Parser/>
                 <RawConnector>
                     <InheritFrom>system:/Connectors/ibmdi.Properties</InheritFrom>
                     <parameter name="collection">@SUBSTITUTE{config.$directory}/IdentityHub.properties</parameter>
-                    <parameter name="collectionType">Java-Properties</parameter>
+                    <parameter name="collectionType">IdentityHub</parameter>
                 </RawConnector>
                 <Key>key</Key>
                 <Value>value</Value>
@@ -275,12 +266,12 @@ var Request = function(workEntry, args) {
                 <InitialLoad>true</InitialLoad>
                 <CacheTimeout>0</CacheTimeout>
             </PropertyStore>
-            <PropertyStore name="IdentityHub">
+            <PropertyStore name="Java-Properties">
                 <Parser/>
                 <RawConnector>
                     <InheritFrom>system:/Connectors/ibmdi.Properties</InheritFrom>
                     <parameter name="collection">@SUBSTITUTE{config.$directory}/IdentityHub.properties</parameter>
-                    <parameter name="collectionType">IdentityHub</parameter>
+                    <parameter name="collectionType">Java-Properties</parameter>
                 </RawConnector>
                 <Key>key</Key>
                 <Value>value</Value>

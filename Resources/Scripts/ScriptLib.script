@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="7" UUID="b44e3c9d-7591-4653-a762-93b8f5048d3f" created="Mon Apr 25 16:37:08 CEST 2022" createdBy="eddiehartman" main="ScriptLib" modified="Tue Apr 26 10:02:10 CEST 2022" modifiedBy="eddiehartman" project="IdentityHub" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="11" UUID="b44e3c9d-7591-4653-a762-93b8f5048d3f" created="Mon Apr 25 16:37:08 CEST 2022" createdBy="eddiehartman" main="ScriptLib" modified="Wed Apr 27 12:36:05 EDT 2022" modifiedBy="JamesChy" project="IdentityHub" version="7.1.1">
     <Script name="ScriptLib">
-        <ModTime>1650960127859</ModTime>
+        <ModTime>1651077363506</ModTime>
         <parameter name="includeFiles"/>
         <parameter name="script"><![CDATA[// ALWAYS INCLUDE SCRIPTLIB FIRST FOR YOUR AL
 //
-_VRS = "20220425 1535"; // First version
+// _VRS = "20220425 1535"; // First version
+_VRS = "20220427 1235-0500 JC"; // First version
 
 var _ERRORS = [];
 var _WARNINGS = [];
@@ -48,8 +49,8 @@ function throwOnError(msg) {
 
 // Set return code and message (and possible body) for the response to the HTTP client
 function setResponse(code, msg, body) {
-	work["http.ResponseCode"] = code;
-	work["http.ResponseMsg"] = msg;
+	work["http.ResponseCode"] = code || "200";
+	work["http.ResponseMsg"] = msg || "OK";
 	if (typeof body != "undefined" && body) {
 		work["http.body"] = body;
 	}
